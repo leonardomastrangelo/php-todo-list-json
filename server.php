@@ -17,7 +17,7 @@ if (!empty($_POST['task'])) {
         'image' => $image,
         'priority' => $priority,
         'text' => $text,
-        'doneTask' => $doneTask
+        'doneTask' => (bool) $doneTask
     ];
     array_unshift($list, $newTask);
     file_put_contents("todo-list.json", json_encode($list));
@@ -25,6 +25,11 @@ if (!empty($_POST['task'])) {
 if (isset($_POST["deleteTask"])) {
     $index = $_POST["deleteTask"];
     array_splice($list, $index, 1);
+    file_put_contents("todo-list.json", json_encode($list));
+}
+if (isset($_POST["done"])) {
+    $index = $_POST["done"];
+    $list[$index]['doneTask'] = !$list[$index]['doneTask'];
     file_put_contents("todo-list.json", json_encode($list));
 }
 header('Content-Type: application/json');

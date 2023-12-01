@@ -8,7 +8,6 @@ createApp({
       lastID: 3,
       selectPriority: "low",
       textTask: "",
-      deleteTask: "",
     };
   },
   methods: {
@@ -46,7 +45,11 @@ createApp({
         });
     },
     todoDone(i) {
-      this.todoList[i].doneTask = this.todoList[i].doneTask ? false : true;
+      const data = new FormData();
+      data.append("done", i);
+      axios.post(this.apiUrl, data).then((res) => {
+        this.todoList = res.data;
+      });
     },
   },
   mounted() {
