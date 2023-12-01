@@ -8,15 +8,19 @@ createApp({
       lastID: 3,
       selectPriority: "low",
       textTask: "",
+      deleteTask: "",
     };
   },
   methods: {
     callList() {
       axios.get(this.apiUrl).then((res) => (this.todoList = res.data));
     },
-    removeTask(id) {
-      const index = this.todoList.findIndex((task) => task.id === id);
-      this.todoList.splice(index, 1);
+    removeTask(index) {
+      const data = new FormData();
+      data.append("deleteTask", index);
+      axios.post(this.apiUrl, data).then((res) => {
+        this.todoList = res.data;
+      });
     },
     addTask() {
       this.lastID++;

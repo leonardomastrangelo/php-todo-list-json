@@ -22,6 +22,11 @@ if (!empty($_POST['task'])) {
     array_unshift($list, $newTask);
     file_put_contents("todo-list.json", json_encode($list));
 }
+if (isset($_POST["deleteTask"])) {
+    $index = $_POST["deleteTask"];
+    array_splice($list, $index, 1);
+    file_put_contents("todo-list.json", json_encode($list));
+}
 header('Content-Type: application/json');
 echo json_encode($list);
 ?>
