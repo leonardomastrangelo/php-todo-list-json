@@ -47,5 +47,6 @@ createApp({
   },
   mounted() {
     this.callList();
+    console.log(this.todoList);
   },
 }).mount("#app");
