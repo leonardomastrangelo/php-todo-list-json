@@ -29,9 +29,17 @@ createApp({
         text: this.selectPriority,
         doneTask: false,
       };
-      this.todoList.unshift(newTask);
-      this.textTask = "";
-      this.selectPriority = "low";
+      axios
+        .post(this.apiUrl, newTask, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => (this.todoList = res.data))
+        .finally(() => {
+          this.textTask = "";
+          this.selectPriority = "low";
+        });
     },
     todoDone(i) {
       this.todoList[i].doneTask = this.todoList[i].doneTask ? false : true;
@@ -39,6 +47,5 @@ createApp({
   },
   mounted() {
     this.callList();
-    console.log(this.todoList);
   },
 }).mount("#app");
